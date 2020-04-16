@@ -62,26 +62,16 @@ void ThreadS2VNA::run()
         return;
     }
 
-    _protocol->SendCommand(_frequencyPoint);
-    _protocol->SendCommand(_filterStrip);
-    _protocol->SendCommand(_startFrequency);
-    _protocol->SendCommand(_stopFrequency);
-
     updateData();
 
     while(_running)
     {
         // проверяю есть ли изменения в данных
-        if (_frequency != _newFrequency && _measurement != _newMeasurement)
+        if (_change == true)
         {
-            // присваиваю новые значения
-            _frequency = _newFrequency;
-            _measurement = _newMeasurement;
+            updateData();
 
-            // передаю значения , что бы их можно было забрать
-            emit sendFrequency(_frequency);
-            emit sendMeasurement(_measurement);
-            emit startDraw(true);
+            _change = false;
         }
         _sleep(1000);
     }
@@ -103,9 +93,8 @@ void ThreadS2VNA::setFrequencyPoint(QString frequencyPoint)
         return;
 
     _frequencyPoint = frequencyPoint;
-    _protocol->SendCommand(_frequencyPoint);
 
-    updateData();
+    _change = true;
 
     emit frequencyPointChanged(frequencyPoint);
 }
@@ -115,9 +104,8 @@ void ThreadS2VNA::setFilterStrip(QString filterStrip)
     if (_filterStrip == filterStrip)
         return;
     _filterStrip = filterStrip;
-    _protocol->SendCommand(_filterStrip);
 
-    updateData();
+    _change = true;
 
     emit filterStripChanged(filterStrip);
 }
@@ -128,9 +116,8 @@ void ThreadS2VNA::setStartFrequency(QString startFrequency)
         return;
 
     _startFrequency = startFrequency;
-    _protocol->SendCommand(_startFrequency);
 
-    updateData();
+    _change = true;
 
     emit startFrequencyChanged(startFrequency);
 }
@@ -141,21 +128,29 @@ void ThreadS2VNA::setStopFrequency(QString stopFrequency)
         return;
 
     _stopFrequency = stopFrequency;
-    _protocol->SendCommand(_stopFrequency);
 
-    updateData();
+    _change = true;
 
     emit stopFrequencyChanged(stopFrequency);
 }
 
 void ThreadS2VNA::updateData()
 {
+    _protocol->SendCommand(_frequencyPoint);
+    _protocol->SendCommand(_filterStrip);
+    _protocol->SendCommand(_startFrequency);
+    _protocol->SendCommand(_stopFrequency);
+
     if (retrieval->DataScaning())
     {
         _newMeasurement = retrieval->MeasurementRetrieval(1);
 
         _newFrequency = retrieval->FrequencyRetrieval(1);
     }
+
+    emit sendFrequency(_newFrequency);
+    emit sendMeasurement(_newMeasurement);
+    emit startDraw(true);
 }
 
 

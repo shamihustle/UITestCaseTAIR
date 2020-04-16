@@ -44,6 +44,8 @@ class ThreadS2VNA : public QObject
 
     QTcpSocket * _socket;
 
+    bool _change = false;
+
 public:
     // Конструктор
     explicit ThreadS2VNA(QObject *parent = 0);
