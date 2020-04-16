@@ -41,15 +41,18 @@ QVector<double> SocketS2VNA::DataRetrieval(const QString& request)
 
     while (_socket->bytesAvailable())
     {
-        QEventLoop loop;
-        QTimer::singleShot(_socket->bytesAvailable() / 9, &loop, SLOT(quit()));
+        res.append(_socket->read(32896));
 
-        loop.exec();
-        res.append(_socket->readAll());
-        list.append(res.split(QRegExp(",")));
+         QEventLoop loop;
+         QTimer::singleShot(1, &loop, SLOT(quit()));
+         _socket->waitForReadyRead(0);
+         loop.exec();
+
+        res.append(_socket->read(32896));
 
     }
 
+    list.append(res.split(QRegExp(",")));
     return qstringToDoubleConverter(list);
 
 }
@@ -106,6 +109,7 @@ QVector<double> SocketS2VNA::qstringToDoubleConverter(QStringList stringList)
     }
     return result;
 }
+
 
 
 SocketS2VNA::~SocketS2VNA()

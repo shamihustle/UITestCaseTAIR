@@ -9,7 +9,7 @@
 #include <QThread>
 
 // Класс обмена информацией с программой S2VNA через Socket
-class SocketS2VNA : public IProtocol , QTcpServer
+class SocketS2VNA : public IProtocol
 {
 private:
 
