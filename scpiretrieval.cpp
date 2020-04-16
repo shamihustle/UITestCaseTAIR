@@ -2,7 +2,8 @@
 #include <sockets2vna.h>
 #include <QString>
 #include <QVector>
-
+#include <QEventLoop>
+#include <QTimer>
 
 
 SCPIRetrieval::SCPIRetrieval(IProtocol *protocol)
@@ -33,14 +34,18 @@ bool SCPIRetrieval::DataScaning()
     {
         _protocol->SendCommand(":TRIG:SOUR BUS\n");
         _protocol->SendCommand(":TRIG:SING\n");
-
-
-        if (_protocol->SendRequest("*OPC?\n").toInt() == 1)
-        {
+        QString ans = _protocol->SendRequest("*OPC?\n");
+        if (ans == "1\n")
             return true;
-        }
-    } catch (std::exception &exception)
+        else return false;
+    }
+    catch (std::exception &exception)
     {
         throw std::runtime_error("Timeout exceeded");
     }
+}
+
+SCPIRetrieval::~SCPIRetrieval()
+{
+
 };

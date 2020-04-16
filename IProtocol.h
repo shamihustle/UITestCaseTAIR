@@ -3,10 +3,13 @@
 
 #include <QString>
 
+#include <QObject>
+
 
 // Интерфейс протокола, который отвечает за связь
 class IProtocol
 {
+
 public:
 
     // Подключение к программе S2VNA
@@ -21,6 +24,7 @@ public:
 
     // Получение данных
     virtual QVector<double> DataRetrieval(const QString& request) = 0;
+
 
     // Деструктор
     virtual ~IProtocol() = default;

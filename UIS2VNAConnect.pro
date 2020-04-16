@@ -24,14 +24,16 @@ SOURCES += \
     scpicommands.cpp \
     scpiretrieval.cpp \
     sockets2vna.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    threads2vna.cpp
 
 HEADERS += \
     IProtocol.h \
     mainwindow.h \
     scpicommands.h \
     scpiretrieval.h \
-    sockets2vna.h
+    sockets2vna.h \
+    threads2vna.h
 
 FORMS += \
     mainwindow.ui

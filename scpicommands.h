@@ -20,13 +20,14 @@ public:
     QString static SetFilterBand(const int &channel, const int &filterBand);
 
     // Назначение начальной частоты
-    QString static SetStartFrequency(const int &channel, const float &startFrequency);
+    QString static SetStartFrequency(const int &channel, const double &startFrequency);
 
     // Назначение конечной частоты
-    QString static SetStopFrequency(const int &channel, const float &stopFrequency);
+    QString static SetStopFrequency(const int &channel, const double &stopFrequency);
 
     // Выбор измеряемого параметра графика
     QString static SelectionMeasuredParameter(const int &channel, const int &chart, const QString &parameter);
+
 
 };
 

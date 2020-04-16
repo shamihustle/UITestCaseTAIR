@@ -3,11 +3,13 @@
 
 #include <IProtocol.h>
 #include <QTcpSocket>
+#include <QTcpServer>
 #include <QString>
 #include <QVector>
+#include <QThread>
 
 // Класс обмена информацией с программой S2VNA через Socket
-class SocketS2VNA : public IProtocol
+class SocketS2VNA : public IProtocol , QTcpServer
 {
 private:
 
@@ -34,6 +36,8 @@ public:
     QVector<double> DataRetrieval(const QString& request);
 
     ~SocketS2VNA();
+
+
 };
 
 #endif // SOCKETS2VNA_H

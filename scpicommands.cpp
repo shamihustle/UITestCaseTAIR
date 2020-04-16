@@ -18,13 +18,13 @@ QString SCPICommands::SetFilterBand(const int &channel, const int &filterBand)
 }
 
 // Устанавлваем начальную частоту
-QString SCPICommands::SetStartFrequency(const int &channel, const float &startFrequency)
+QString SCPICommands::SetStartFrequency(const int &channel, const double &startFrequency)
 {
     return "SENS" + QString::number(channel) + ":FREQ:STAR " + QString::number(startFrequency) + "GHZ\n";
 }
 
 // Установка конечной частоты
-QString SCPICommands::SetStopFrequency(const int &channel, const float &stopFrequency)
+QString SCPICommands::SetStopFrequency(const int &channel, const double &stopFrequency)
 {
     return "SENS" + QString::number(channel) + ":FREQ:STOP " + QString::number(stopFrequency) + "GHZ\n";
 }
@@ -34,6 +34,8 @@ QString SCPICommands::SelectionMeasuredParameter(const int &channel, const int &
 {
     return "CALC" + QString::number(channel) + ":PAR" + QString::number(chart) + ":DEF " + parameter + "\n";
 }
+
+
 
 
 

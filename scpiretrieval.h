@@ -25,6 +25,8 @@ public:
 
     // Запусr измерений и ожидание завершения
     bool DataScaning();
+
+    ~SCPIRetrieval();
 };
 
 #endif // SCPIRETRIEVAL_H
